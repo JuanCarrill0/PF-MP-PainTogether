@@ -1,0 +1,40 @@
+.messages-container {
+  max-width: 850px;
+  padding: 10px 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background-color: var(--main-color-blur);
+  border-radius: 10px;
+  backdrop-filter: blur(100px);
+}
+
+.messages-container div {
+  margin: 100px 40px;
+  color: var(--white);
+}
+
+.messages-container div p,
+.messages-container div button {
+  margin-top: 30px;
+  text-align: justify;
+}
+
+.messages-container div h2 { font-size: 25px; }
+
+.messages-container button {
+  padding: 10px 40px;
+  border: 2px solid var(--white);
+  background-color: transparent;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--white);
+  outline: none;
+  transition: all 300ms;
+  border-radius: 10px;
+}
+
+.messages-container button:hover {
+  background: var(--white);
+  color: var(--main-color);
+}
