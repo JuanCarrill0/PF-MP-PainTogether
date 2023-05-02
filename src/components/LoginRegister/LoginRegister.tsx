@@ -5,7 +5,7 @@ import { useState } from 'react';
 import './LoginRegister.css'
 
 // Componentes
-import Messages from './Messages/Messages';
+import Messages from './Message/Message';
 import Form from './Form/Form';
 
 function LoginRegister() {
