@@ -5,7 +5,6 @@ function Canvas() {
   const [isDrawing, setIsDrawing] = useState<boolean>(false);
   const [color, setColor] = useState<string>('black');
   const [isErasing, setIsErasing] = useState<boolean>(false);
-  const [strokes, setStrokes] = useState<Array<Array<number>>>([]);
 
   const startDrawing = (event: React.MouseEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current;
@@ -62,6 +61,8 @@ function Canvas() {
     }
   };
 
+  /*  EVENTO CUANDO EL MOUSE SALE DEL CANVAS
+
   const removeHoverClass = (event: React.MouseEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -69,6 +70,8 @@ function Canvas() {
     if (!context) return;
     context.clearRect(0, 0, canvas.width, canvas.height);
   };
+
+  */
 
   const clearCanvas = () => {
     const canvas = canvasRef.current;
