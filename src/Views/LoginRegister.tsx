@@ -5,8 +5,8 @@ import { useState } from 'react';
 import './LoginRegister.css'
 
 // Componentes
-import Messages from './Message/Message';
-import Form from './Form/Form';
+import Messages from '../components/LoginRegister/Message/Message';
+import Form from '../components/LoginRegister/Form/Form';
 
 function LoginRegister() {
   const [change, setChange] = useState({});
