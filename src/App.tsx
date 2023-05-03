@@ -3,7 +3,7 @@ import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 // Componentes
-import LoginRegister from '../Views/LoginRegister';
+import LoginRegister from './Views/LoginRegister';
 
 function App() {
   return (
