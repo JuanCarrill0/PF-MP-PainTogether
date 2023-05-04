@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import Swal from 'sweetalert2'
 
 //Estilos
 import './Form.css';
 
 function Form(props:any) {
+
   //Declaración de las variables para el formulario
   const [nombre, setNombre] = useState('');
   const [email, setEmail] = useState('');
@@ -13,7 +15,7 @@ function Form(props:any) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const url = 'http://127.0.0.1:5000/auth/login';
+    const url = 'http://192.168.0.24:5000/auth/login';
     const data = { nombre, contrasena };
 
     fetch(url, {
@@ -28,9 +30,23 @@ function Form(props:any) {
       if (data.access_token) {
         // Aquí puedes guardar el token en el almacenamiento local (local storage)
         localStorage.setItem('access_token', data.access_token);
-        console.log('Inicio de sesión exitoso');
+        Swal.fire({
+          title: 'Inicio de sesión exitoso',
+          icon: 'success',
+          showCancelButton: false,
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'Ok',
+          allowOutsideClick: false // Evita cerrar la ventana al hacer clic fuera de ella
+        }).then((result) => {
+          window.location.reload(); // recarga la página
+        });
+        
       } else {
-        console.log('Credenciales inválidas');
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Credenciales Invalidas!',
+        })
       }
     })
     .catch(error => console.error('Error:', error));
@@ -40,7 +56,7 @@ function Form(props:any) {
   const handleRegisterSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://127.0.0.1:5000/auth/register', {
+      const response = await fetch('http://192.168.0.24:5000/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -55,12 +71,27 @@ function Form(props:any) {
       const data = await response.json();
       localStorage.setItem('access_token', data.access_token);
       // hacer algo más después de registrar al usuario
-      console.log("Usuario Registrado")
+      Swal.fire({
+        title: 'Registro Completado',
+        icon: 'success',
+        showCancelButton: false,
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'Ok',
+        allowOutsideClick: false // Evita cerrar la ventana al hacer clic fuera de ella
+      }).then((result) => {
+        window.location.reload(); // recarga la página
+      });
     } catch (error) {
-      console.error(error);
-      // manejar errores de registro
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Algo Salió Mal, Revisa los campos!',
+      })
     }
   }
+
+  
+
   return (
     <div className="forms-containers" style={{left: props?.change?.formsLeft, top: props?.change?.formsTop}}>     
       {/* FORMULARIO DE REGISTRO */}
@@ -83,7 +114,7 @@ function Form(props:any) {
           <input type="password" placeholder="Contraseña" onChange={(e) => setPassword(e.target.value)} required />
         </div>
         <button>Iniciar sesión</button>
-      </form>           
+      </form>         
     </div>
   );
 }

@@ -6,6 +6,7 @@ function Canvas() {
   const [color, setColor] = useState<string>('black');
   const [isErasing, setIsErasing] = useState<boolean>(false);
 
+
   const startDrawing = (event: React.MouseEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current;
     const context = canvas?.getContext('2d');
