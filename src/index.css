@@ -1,6 +1,13 @@
 :root {
-  --main-color: rgb(127, 90, 131);
+  --main-color: rgb(174, 89, 184);
+  --main-color-dark: rgb(153, 105, 158);
   --main-color-blur: rgba(127, 90, 131, 0.8);
   --white: white;
   --light-gray: rgb(226, 226, 226);
+  --gray: rgb(145, 141, 141);
+}
+
+* {
+  margin: 0;
+  padding: 0;
 }
