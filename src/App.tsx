@@ -37,7 +37,7 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={<Canvas />}
+            element={accessToken ? <Canvas /> : <LoginRegister />}
           />
         </Routes>
       </BrowserRouter>
