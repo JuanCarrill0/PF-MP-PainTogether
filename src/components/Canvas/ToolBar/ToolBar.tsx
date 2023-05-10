@@ -12,33 +12,26 @@ function ToolBar(props:any) {
   const [restore, setRestore] = useState<Array<10>>([]);
   const [index, setIndex] = useState(-1);
 
-  const addChange = () => {
+  const addChange = (event: React.MouseEvent<HTMLCanvasElement>) => {
     const canvas = props.canvasRef.current;
     const context = canvas?.getContext('2d');
-    let lastRestores = restore.slice(0, index+1);
+    
+    if (event.type !== 'mouseout') {
+      let lastRestores = restore.slice(0, index+1);
+  
+      if (index + 1 > 10) lastRestores = restore.slice(1, index+1);
+      else setIndex(index + 1);
 
-    if (index + 1 > 10) {
-      lastRestores = restore.slice(1, index+1); 
-    } 
-    else if (index + 1 >= restore.length) {
-      lastRestores = restore; 
-      setIndex(index + 1);
+      setRestore([...lastRestores, context.getImageData(0, 0, canvas.width, canvas.height)]);
     }
-    else {
-      setIndex(index + 1);
-    }
-
-    setRestore([...lastRestores, context.getImageData(0, 0, canvas.width, canvas.height)]);
   }
 
-  const clearCanvas = () => {
+  const clearCanvas = (event: React.MouseEvent<HTMLCanvasElement>) => {
     const canvas = props.canvasRef.current;
-    if (!canvas) return;
-    const context = canvas.getContext('2d');
-    if (!context) return;
+    const context = canvas?.getContext('2d');
     context.clearRect(0, 0, canvas.width, canvas.height);
 
-    addChange();
+    addChange(event);
   };
 
   const erase = (event: React.ChangeEvent<HTMLInputElement>) => { 
@@ -47,26 +40,23 @@ function ToolBar(props:any) {
     (tool.classList.contains('selected')) ? tool.classList.remove('selected') : tool.classList.add('selected');
   };
 
-  const undoLast = () => {
+  const undoLast = (event: React.MouseEvent<HTMLCanvasElement>) => {
     const canvas = props.canvasRef.current;
     const context = canvas?.getContext('2d');
 
-    console.log(restore);
-    console.log(index);
-
-    if (index > 0) {
+    if(index > 0) { 
       setIndex(index - 1);
       context.putImageData(restore[index-1], 0, 0);
     }
   }
 
-  const undoNext = () => {
+  const undoNext = (event: React.MouseEvent<HTMLCanvasElement>) => {
     const canvas = props.canvasRef.current;
     const context = canvas?.getContext('2d');
-
-    if (restore[index + 1]) {
-      setIndex(index + 1);
+    
+    if (restore[index+1]) {
       context.putImageData(restore[index+1], 0, 0);
+      setIndex(index+1);
     }
   }
 

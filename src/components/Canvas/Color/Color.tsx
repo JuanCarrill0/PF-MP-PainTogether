@@ -7,88 +7,61 @@ function Color(props:any) {
   const [isDrawing, setIsDrawing] = useState<boolean>(false);
   const [color, setColor] = useState<string>('black'); 
   const [colorWidth, setColorWidth] = useState<string>('2'); 
-  const [displayColorsContainer, setDisplayColorContainer] = useState<string>('none');
+  const [displayColorsContainer, setDisplayColorsContainer] = useState<string>('none');
 
-  const startDrawing = (event: React.MouseEvent<HTMLCanvasElement>) => {
+  const start = (event: React.MouseEvent<HTMLCanvasElement>) => {
     const canvas = props.canvasRef.current;
     const context = canvas?.getContext('2d');
-    if (!context) return;
-    const { offsetX, offsetY } = event.nativeEvent;
-    context.beginPath();
-    context.moveTo(offsetX, offsetY);
+
     setIsDrawing(true);
-
+    context.beginPath();
+    context.moveTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop);
+    
     event.preventDefault();
-  };
+  }
 
-  const continueDrawing = (event: React.MouseEvent<HTMLCanvasElement>) => {
+  const draw = (event: React.MouseEvent<HTMLCanvasElement>) => {
     const canvas = props.canvasRef.current;
     const context = canvas?.getContext('2d');
 
-
-    if (!context) return;
-
-    if (props.isErasing) {
-      // Borrar área de 3px alrededor del cursor
-      if (canvas) {
-        const { left, top } = canvas.getBoundingClientRect();
-        const { clientX, clientY } = event;
-        const x = clientX - left;
-        const y = clientY - top;
-        context.clearRect(x - 3, y - 3, 30, 30);
-      }
-    } else if (isDrawing) {
-      // Dibujar trazo
-      const { offsetX, offsetY } = event.nativeEvent;
-      context.lineTo(offsetX, offsetY);
-      context.strokeStyle = color;
+    if(isDrawing) {
+      context.lineTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop);
+      props.isErasing ? context.strokeStyle = 'white' : context.strokeStyle = color;
       context.lineWidth = colorWidth;
-      context.lineCap = "round";
-      context.lineJoin = "round";
+      context.lineCap = 'round';
+      context.lineJoin = 'round';
       context.stroke();
     }
 
     event.preventDefault();
-  };
+  }
 
-  const stopDrawing = () => {
-    setIsDrawing(false);
-    props.addChange();
-  };
+  const stop = (event: React.MouseEvent<HTMLCanvasElement>) => {
+    const canvas = props.canvasRef.current;
+    const context = canvas?.getContext('2d');
 
-  const addHoverClass = (event: React.MouseEvent<HTMLCanvasElement>) => {
-    if (!props.isErasing) {
-      const canvas = props.canvasRef.current;
-      if (!canvas) return;
-      const context = canvas.getContext('2d');
-      if (!context) return;
-      const { left, top } = canvas.getBoundingClientRect();
-      const { clientX, clientY } = event;
-      const x = clientX - left;
-      const y = clientY - top;
-
-      context.beginPath();
-      context.arc(x, y, 20, 0, 2 * Math.PI);
-      context.fillStyle = 'white';
-      context.fill();
+    if (isDrawing) {
+      context.stroke();
+      setIsDrawing(false);
+      props.addChange(event);
     }
+
     event.preventDefault();
-  };
+  }
 
   useEffect(() => {
     props.setFunctions({
-      startDrawing: startDrawing,
-      continueDrawing: continueDrawing,
-      stopDrawing: stopDrawing,
-      addHoverClass: addHoverClass
+      start: start,
+      draw: draw,
+      stop: stop
     });
   }, [isDrawing, props.isErasing]);
 
   return (
     <div className='paint'>
-      <i className='bx bx-paint' onClick={() => setDisplayColorContainer('block')}></i>
+      <i className='bx bx-paint' onClick={() => setDisplayColorsContainer('block')}></i>
       <p className="message-paint">Pintar</p>
-      <div className="colors-container" style={{display: displayColorsContainer}} onMouseLeave={() => setDisplayColorContainer('none')}>
+      <div className="colors-container" style={{display: displayColorsContainer}} onMouseLeave={() => setDisplayColorsContainer('none')}>
         <div className="colors">
           <div style={{backgroundColor: 'black'}} onClick={() => setColor('black')}></div>
           <div style={{backgroundColor: 'white'}} onClick={() => setColor('white')}></div>
