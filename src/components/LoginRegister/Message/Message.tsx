@@ -3,7 +3,7 @@ import React from 'react';
 //Estilos
 import './Message.css';
 
-function Messages(props:any) {
+function Message(props:any) {
   function register() {
     let styles = {
       formsLeft: "",
@@ -58,4 +58,4 @@ function Messages(props:any) {
   );
 }
 
-export default Messages;
+export default Message;

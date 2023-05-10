@@ -1,0 +1,30 @@
+.option {
+  position: relative;
+}
+
+.option span i {
+  margin: 0 20px;
+  font-size: 30px;
+  background-color: var(--white);
+  padding: 5px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.message-span {
+  padding: 2px 8px;
+  border-radius: 20px;
+  background-color: var(--white);
+  font-weight: bold;
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.option:hover .message-span { display: block; }
+
+.option:not(:hover) .message-span { display: none; }
+
+.selected { color: var(--main-color-dark); }
