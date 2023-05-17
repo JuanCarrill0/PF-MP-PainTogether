@@ -5,6 +5,7 @@ import './ToolBar.css';
 
 // Componentes
 import Color from '../Color/Color';
+
 import Option from '../Option/Option';
 import Account from '../Account/Account';
 

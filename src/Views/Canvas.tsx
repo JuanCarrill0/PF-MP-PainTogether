@@ -4,7 +4,7 @@ import React, { useRef, useState } from 'react';
 import './Canvas.css'
 
 // Componentes
-import ToolBar from '../Components/Canvas/ToolBar/ToolBar';
+import ToolBar from '../components/Canvas/ToolBar/ToolBar';
 
 function Canvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
