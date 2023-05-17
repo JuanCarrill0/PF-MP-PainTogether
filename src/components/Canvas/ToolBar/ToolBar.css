@@ -8,7 +8,7 @@
 }
 
 .toolBar img {
-  max-width: 50px;
+  width: 50px;
   margin-left: 15px;
   margin-right: 15px;
   border: 5px solid var(--white);
@@ -19,4 +19,9 @@
   margin-right: 20px;
   font-size: 40px;
   color: var(--white);
+}
+
+.toolBar .account-option {
+  margin-left: auto;
+  margin-right: 10px;
 }

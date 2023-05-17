@@ -106,11 +106,11 @@ function Form(props:any) {
       <form className="login-form" onSubmit={handleSubmit} style={{display: props?.change?.loginDisplay}}>
         <h2>Inicia sesión en PainTogether</h2>
         <div>
-          <i className="bx bxs-user" style={{color: '#7f5a83'}} />
+          <i className="bx bxs-user"/>
           <input type="text" placeholder="Usuario" onChange={(e) => setNombre(e.target.value)} required />
         </div>
         <div>
-          <i className="bx bxs-lock" style={{color: '#7f5a83'}} />
+          <i className="bx bxs-lock"/>
           <input type="password" placeholder="Contraseña" onChange={(e) => setPassword(e.target.value)} required />
         </div>
         <button>Iniciar sesión</button>

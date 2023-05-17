@@ -1,0 +1,49 @@
+.account-container {
+  background-color: var(--main-color-dark);
+  border-radius: 20px;
+  position: absolute;
+  width: 300px;
+  height: 65vh;
+  padding:20px 0;
+  z-index: 1;
+  top: 50px;
+  right: 0;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  overflow-y: auto;
+  border: 1px solid black;
+}
+
+.account-container::-webkit-scrollbar {
+  width: 0;
+  background-color: transparent;
+}
+
+.account-container::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
+.account-container h2 {
+  color: white;
+  margin: 10px 0;
+  font-size: 30px;
+}
+
+.account-container .user-data {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-data img {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
+}
+
+.url-canvas {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

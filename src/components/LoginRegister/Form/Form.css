@@ -55,6 +55,7 @@
 .forms-containers i {
   position: absolute;
   margin: 32px 0 0 8px;
+  color: var(--main-color);
 }
 
 .login-form input { padding-left: 30px; }
