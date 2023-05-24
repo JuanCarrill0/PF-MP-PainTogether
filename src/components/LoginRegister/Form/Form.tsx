@@ -15,7 +15,7 @@ function Form(props:any) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const url = 'http://192.168.0.24:5000/auth/login';
+    const url = 'http://192.168.0.14:5000/auth/login';
     const data = { nombre, contrasena };
 
     fetch(url, {
@@ -56,7 +56,7 @@ function Form(props:any) {
   const handleRegisterSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://192.168.0.24:5000/auth/register', {
+      const response = await fetch('http://192.168.0.14:5000/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -89,8 +89,6 @@ function Form(props:any) {
       })
     }
   }
-
-  
 
   return (
     <div className="forms-containers" style={{left: props?.change?.formsLeft, top: props?.change?.formsTop}}>     
