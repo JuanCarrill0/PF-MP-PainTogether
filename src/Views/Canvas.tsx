@@ -19,7 +19,7 @@ function Canvas() {
   });
 
   useEffect(() => {
-    socketRef.current = io('http://192.168.0.14:5000'); // Establece la referencia al socket
+    socketRef.current = io('http://192.168.0.17:5000'); // Establece la referencia al socket
 
     // Configurar manejadores de eventos para recibir eventos de dibujo desde el backend
     socketRef.current.on('draw_event', handleDrawEvent);
