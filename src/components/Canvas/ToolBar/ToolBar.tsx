@@ -9,6 +9,7 @@ import Color from '../Color/Color';
 
 import Option from '../Option/Option';
 import { DefaultEventsMap } from 'socket.io/dist/typed-events';
+import Account from '../Account/Account';
 
 interface ToolBarProps {
   canvasRef: RefObject<HTMLCanvasElement>;
@@ -81,11 +82,13 @@ function ToolBar(props: ToolBarProps) {
     <div className='toolBar'>
       <img src="../img/logo.png" alt="Logo" />
       <h1>PainTogether</h1>
-      <Color canvasRef={props.canvasRef} setFunctions={props.setFunctions} isErasing={isErasing} addChange={addChange} socket={socket} />
+      <Option icon={<i className='bx bx-paint'></i>} description={'Pintar'} panel={Color} 
+      panelProps={{canvasRef: props.canvasRef, setFunctions: props.setFunctions, isErasing: isErasing, addChange: addChange}} />
       <Option icon={<i className='bx bxs-low-vision'></i>} description={'Borrar Todo'} optionFunction={clearCanvas} />
       <Option icon={<i className='bx bxs-eraser'></i>} description={'Borrar'} optionFunction={erase} />
       <Option icon={<i className='bx bx-undo'></i>} description={'Deshacer'} optionFunction={undoLast} />
       <Option icon={<i className='bx bx-redo'></i>} description={'Rehacer'} optionFunction={undoNext} />
+      <div className='account-option'><Option icon={<i className='bx bxs-user-circle'></i>} description={'Cuenta'} panel={Account} /></div>
     </div>
   );
 }

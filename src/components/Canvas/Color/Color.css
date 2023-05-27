@@ -1,32 +1,3 @@
-.paint {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-}
-
-.paint i {
-  font-size: 30px;
-  background-color: var(--white);
-  padding: 5px;
-  border-radius: 50%;
-  margin: 0 20px;
-  cursor: pointer;
-}
-
-.message-paint {
-  padding: 2px 8px;
-  border-radius: 20px;
-  background-color: var(--white);
-  font-weight: bold;
-  position: absolute;
-  top: 50px;
-}
-
-.paint:hover .message-paint { display: block; }
-
-.paint:not(:hover) .message-paint { display: none; }
-
 .colors-container {
   background-color: var(--main-color-dark);
   border-radius: 20px;
@@ -35,6 +6,8 @@
   height: 90px;
   z-index: 1;
   top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .colors {

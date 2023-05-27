@@ -30,6 +30,9 @@ function Form(props:any) {
       if (data.access_token) {
         // Aquí puedes guardar el token en el almacenamiento local (local storage)
         localStorage.setItem('access_token', data.access_token);
+        localStorage.setItem('Usuario', data.usuario);
+        localStorage.setItem('Correo',data.correo);
+
         Swal.fire({
           title: 'Inicio de sesión exitoso',
           icon: 'success',
@@ -70,6 +73,9 @@ function Form(props:any) {
 
       const data = await response.json();
       localStorage.setItem('access_token', data.access_token);
+      localStorage.setItem('Usuario', data.usuario);
+      localStorage.setItem('Correo',data.correo);
+
       // hacer algo más después de registrar al usuario
       Swal.fire({
         title: 'Registro Completado',
@@ -104,11 +110,11 @@ function Form(props:any) {
       <form className="login-form" onSubmit={handleSubmit} style={{display: props?.change?.loginDisplay}}>
         <h2>Inicia sesión en PainTogether</h2>
         <div>
-          <i className="bx bxs-user" style={{color: '#7f5a83'}} />
+          <i className="bx bxs-user"/>
           <input type="text" placeholder="Usuario" onChange={(e) => setNombre(e.target.value)} required />
         </div>
         <div>
-          <i className="bx bxs-lock" style={{color: '#7f5a83'}} />
+          <i className="bx bxs-lock"/>
           <input type="password" placeholder="Contraseña" onChange={(e) => setPassword(e.target.value)} required />
         </div>
         <button>Iniciar sesión</button>
