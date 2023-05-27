@@ -47,3 +47,9 @@
   flex-direction: column;
   align-items: center;
 }
+
+.logout{
+  width: 60%;
+  height: 20px;
+  margin-top: 5px;
+}

@@ -15,7 +15,7 @@ function Form(props:any) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const url = 'http://192.168.0.24:5000/auth/login';
+    const url = 'http://192.168.0.17:5000/auth/login';
     const data = { nombre, contrasena };
 
     fetch(url, {
@@ -30,6 +30,9 @@ function Form(props:any) {
       if (data.access_token) {
         // Aquí puedes guardar el token en el almacenamiento local (local storage)
         localStorage.setItem('access_token', data.access_token);
+        localStorage.setItem('Usuario', data.usuario);
+        localStorage.setItem('Correo',data.correo);
+
         Swal.fire({
           title: 'Inicio de sesión exitoso',
           icon: 'success',
@@ -56,7 +59,7 @@ function Form(props:any) {
   const handleRegisterSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://192.168.0.24:5000/auth/register', {
+      const response = await fetch('http://192.168.0.17:5000/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -70,6 +73,9 @@ function Form(props:any) {
 
       const data = await response.json();
       localStorage.setItem('access_token', data.access_token);
+      localStorage.setItem('Usuario', data.usuario);
+      localStorage.setItem('Correo',data.correo);
+
       // hacer algo más después de registrar al usuario
       Swal.fire({
         title: 'Registro Completado',
