@@ -27,6 +27,7 @@ function ToolBar(props: ToolBarProps) {
   const addChange = (event: React.MouseEvent<HTMLCanvasElement>) => {
     const canvas = props.canvasRef.current;
     const context = canvas?.getContext('2d');
+
     if(canvas && context){
       if (event.type !== 'mouseout') {
         let lastRestores = restore.slice(0, index+1);
@@ -83,7 +84,7 @@ function ToolBar(props: ToolBarProps) {
       <img src="../img/logo.png" alt="Logo" />
       <h1>PainTogether</h1>
       <Option icon={<i className='bx bx-paint'></i>} description={'Pintar'} panel={Color} 
-      panelProps={{canvasRef: props.canvasRef, setFunctions: props.setFunctions, isErasing: isErasing, addChange: addChange}} />
+      panelProps={{canvasRef: props.canvasRef, setFunctions: props.setFunctions, isErasing: isErasing, addChange: addChange, socket : socket}} />
       <Option icon={<i className='bx bxs-low-vision'></i>} description={'Borrar Todo'} optionFunction={clearCanvas} />
       <Option icon={<i className='bx bxs-eraser'></i>} description={'Borrar'} optionFunction={erase} />
       <Option icon={<i className='bx bx-undo'></i>} description={'Deshacer'} optionFunction={undoLast} />

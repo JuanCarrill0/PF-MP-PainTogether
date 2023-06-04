@@ -10,7 +10,7 @@ interface ColorProps {
   panelDisplay: undefined;
   canvasRef: RefObject<HTMLCanvasElement>;
   setFunctions: (functions: any) => void;
-  socket: Socket<DefaultEventsMap, DefaultEventsMap> | null;
+  socket: Socket<DefaultEventsMap, DefaultEventsMap>;
   isErasing: boolean;
   addChange: (event: React.MouseEvent<HTMLCanvasElement>) => void;
 }
@@ -29,24 +29,40 @@ function Color(props:ColorProps) {
       context.beginPath();
       context.moveTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop);
     }
+    // Acceder al objeto socket dentro de la referencia
+    const socket = props.socket;
+
+    // Enviar el evento de dibujo al servidor
+    if(socket){
+      const data = {
+        sid: socket.id,
+        lineWidth: context?.lineWidth,
+        x: event.clientX - canvas!.offsetLeft,
+        y: event.clientY - canvas!.offsetTop,
+        color: color,
+        draw_type: 'start',
+        isErasing : props.isErasing,
+        isDrawing: isDrawing
+      };
+      socket.emit('draw_event', data);
+    }
+
     event.preventDefault();
+    event.stopPropagation();
   };
 
   const draw = (event: React.MouseEvent<HTMLCanvasElement>) => {
     if (isDrawing) {
       const canvas = props.canvasRef.current;
       const context = canvas?.getContext('2d');
-
-      const { clientX, clientY } = event;
-      const rect = canvas?.getBoundingClientRect();
-      const x = clientX - rect!.left;
-      const y = clientY - rect!.top;
-
-      context?.lineTo(x, y);
-      context?.stroke();
-
-      context?.beginPath();
-      context?.moveTo(x, y);
+      if(context && canvas){
+        context.lineTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop);
+        props.isErasing ? context.strokeStyle = 'white' : context.strokeStyle = color;
+        context.lineWidth = parseInt(colorWidth);
+        context.lineCap = 'round';
+        context.lineJoin = 'round';
+        context.stroke();
+      }
 
       // Acceder al objeto socket dentro de la referencia
       const socket = props.socket;
@@ -55,16 +71,20 @@ function Color(props:ColorProps) {
       if(socket){
         const data = {
           sid: socket.id,
-          x: x,
-          y: y,
+          lineWidth: context?.lineWidth,
+          x: event.clientX - canvas!.offsetLeft,
+          y: event.clientY - canvas!.offsetTop,
           color: color,
-          draw_type: 'draw'
+          draw_type: 'draw',
+          isErasing : props.isErasing,
+          isDrawing: isDrawing
         };
         socket.emit('draw_event', data);
       }
     }
 
     event.preventDefault();
+    event.stopPropagation();
   };
 
   const stop = (event: React.MouseEvent<HTMLCanvasElement>) => {
@@ -84,15 +104,17 @@ function Color(props:ColorProps) {
           const data = {
             sid: socket.id,
             color: color,
-            draw_type: 'start'
+            lineWidht: parseInt(colorWidth),
+            draw_type: 'stop',
+            isDrawing : isDrawing
           };
           socket.emit('draw_event', data);
         }
         props.addChange(event);
       }
     }
-
     event.preventDefault();
+    event.stopPropagation();
   };
 
   useEffect(() => {

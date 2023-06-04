@@ -19,7 +19,7 @@ function Canvas() {
   });
 
   useEffect(() => {
-    socketRef.current = io('http://192.168.0.17:5000'); // Establece la referencia al socket
+    socketRef.current = io('http://10.23.12.8:5000'); // Establece la referencia al socket
 
     // Configurar manejadores de eventos para recibir eventos de dibujo desde el backend
     socketRef.current.on('draw_event', handleDrawEvent);
@@ -46,28 +46,32 @@ function Canvas() {
   };
   
 // Función para manejar los eventos de dibujo recibidos desde el backend
-const handleDrawEvent = (data: { x: any; y: any; color: any; draw_type: any }) => {
+const handleDrawEvent = (data: { x: any; y: any; color: any; draw_type: any, lineWidth: any, isErasing: boolean, isDrawing:boolean }) => {
   const canvas = canvasRef.current;
   const context = canvas?.getContext('2d');
 
   if (!context) return;
 
-  const { x, y, color, draw_type } = data;
+  let { x, y, color, draw_type, lineWidth, isErasing, isDrawing}= data;
 
-  context.lineWidth = 2;
-  context.strokeStyle = color;
+  context.lineWidth = lineWidth;
 
-  if (draw_type === 'draw') {
+  if (draw_type === 'draw' && isDrawing) {
+    isErasing ? context.strokeStyle = 'white' : context.strokeStyle = color;
     context.lineTo(x, y);
+    context.lineCap = 'round';
+    context.lineJoin = 'round';
     context.stroke();
   }
-
-  if (draw_type === 'start') {
+  else if (draw_type === 'start') {
     context.beginPath();
     context.moveTo(x, y);
-  } else if (draw_type === 'stop') {
-    context.closePath();
   }
+  else if (draw_type === 'stop') {
+    context.beginPath();
+    context.moveTo(x, y);
+    }
+  
 };
 
   return (

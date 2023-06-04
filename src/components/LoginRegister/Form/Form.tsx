@@ -15,7 +15,7 @@ function Form(props:any) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const url = 'http://192.168.0.17:5000/auth/login';
+    const url = 'http://10.23.12.8:5000/auth/login';
     const data = { nombre, contrasena };
 
     fetch(url, {
@@ -59,7 +59,7 @@ function Form(props:any) {
   const handleRegisterSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://192.168.0.17:5000/auth/register', {
+      const response = await fetch('http://10.23.12.8:5000/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
